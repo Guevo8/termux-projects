@@ -1,0 +1,17 @@
+# Python / FastAPI
+backend/.venv/
+backend/__pycache__/
+backend/app/__pycache__/
+
+# Laufzeitdaten (werden vom Backend erzeugt)
+backend/data/projects.json
+
+# Node / Frontend (falls du später Vite/React einbaust)
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Sonstiges
+.DS_Store
+*.log

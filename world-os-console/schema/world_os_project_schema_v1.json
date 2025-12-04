@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "World-OS Project Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "type",
+    "tiers"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Projekt-ID (UUID oder Slug)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Projektname / Weltname"
+    },
+    "type": {
+      "type": "string",
+      "description": "Projekttyp",
+      "enum": [
+        "novel",
+        "game",
+        "ttrpg",
+        "screenplay",
+        "other"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tiers": {
+      "type": "object",
+      "required": [
+        "T0_foundation",
+        "T1_core",
+        "T2_modules",
+        "T3_characters",
+        "T4_zones",
+        "T5_narrative"
+      ],
+      "properties": {
+        "T0_foundation": {
+          "type": "object",
+          "description": "Fundament: Meta-Regeln, Kanon/Non-Kanon, Physik/Magie, Tonalität.",
+          "properties": {
+            "canon_statement": {
+              "type": "string"
+            },
+            "non_canon_rules": {
+              "type": "string"
+            },
+            "physics_magic_rules": {
+              "type": "string"
+            },
+            "themes": {
+              "type": "string"
+            },
+            "tone": {
+              "type": "string"
+            },
+            "constraints": {
+              "type": "string"
+            }
+          }
+        },
+        "T1_core": {
+          "type": "object",
+          "description": "World Core Card – Essenz der Welt/IP.",
+          "properties": {
+            "logline": {
+              "type": "string"
+            },
+            "setting_summary": {
+              "type": "string"
+            },
+            "core_conflict": {
+              "type": "string"
+            },
+            "signature_elements": {
+              "type": "string"
+            },
+            "protagonist_factions": {
+              "type": "string"
+            },
+            "antagonistic_forces": {
+              "type": "string"
+            }
+          }
+        },
+        "T2_modules": {
+          "type": "array",
+          "description": "Module & Systeme (Fraktionen, Öko, Tech, Magie-Systeme etc.).",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "importance": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "T3_characters": {
+          "type": "array",
+          "description": "Charaktere nach R.A.C.E.-Logik (Lite-Variante).",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "race_profile": {
+                "type": "string"
+              },
+              "goals": {
+                "type": "string"
+              },
+              "flaws": {
+                "type": "string"
+              },
+              "relationships": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "T4_zones": {
+          "type": "array",
+          "description": "Zonen/Schauplätze (Lite-Variante).",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "sensory_notes": {
+                "type": "string"
+              },
+              "key_conflicts": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "T5_narrative": {
+          "type": "array",
+          "description": "Narrative Chains – Arcs, Quests, Episoden.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              },
+              "premise": {
+                "type": "string"
+              },
+              "beats": {
+                "type": "string"
+              },
+              "outcome": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

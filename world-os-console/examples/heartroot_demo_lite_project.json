@@ -1,0 +1,35 @@
+{
+  "id": "heartroot-demo-lite",
+  "name": "Heartroot City (Lite Demo)",
+  "type": "game",
+  "description": "Beispielprojekt, das eine vereinfachte Heartroot City nach dem World-OS-Schema zeigt.",
+  "created_at": "2025-12-04T21:13:45.218689Z",
+  "updated_at": "2025-12-04T21:13:45.218711Z",
+  "tags": [
+    "demo",
+    "heartroot",
+    "world-os"
+  ],
+  "tiers": {
+    "T0_foundation": {
+      "canon_statement": "Heartroot City ist eine vertikale, lebendige Megastruktur, in der organische und technische Resonanz verschränkt sind.",
+      "non_canon_rules": "",
+      "physics_magic_rules": "Biotech-Resonanz statt klassischer Magie; Energieflüsse sind nachvollziehbar, nicht beliebig.",
+      "themes": "Wachstum vs. Erschöpfung, Symbiose vs. Ausbeutung.",
+      "tone": "Hopepunk mit dunklen Untertönen.",
+      "constraints": "Keine reine Dystopie, keine allmächtige Magie."
+    },
+    "T1_core": {
+      "logline": "Eine Stadt im lebenden Baum kämpft darum, ihr Resonanz-Gleichgewicht zu bewahren, während innere Fraktionen um Kontrolle ringen.",
+      "setting_summary": "Vertical City im Inneren und auf der Oberfläche eines Gigant-Baumes.",
+      "core_conflict": "Energiekonflikt zwischen nachhaltiger Resonanz und kurzfristiger Ausbeutung.",
+      "signature_elements": "Amber/Cyan-Resonanz, lebende Infrastruktur, vertikale Schichten.",
+      "protagonist_factions": "Heartroot Council, Resonanz-Gärtner:innen.",
+      "antagonistic_forces": "Extraktive Syndikate, externe Machtblöcke."
+    },
+    "T2_modules": [],
+    "T3_characters": [],
+    "T4_zones": [],
+    "T5_narrative": []
+  }
+}
