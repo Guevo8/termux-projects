@@ -54,6 +54,33 @@
       margin-top: 4px;
       min-height: 1.1rem;
     }
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .controls button {
+      flex: 0 0 auto;
+      min-width: 70px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      background: #0f172a;
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+    .controls button:active {
+      background: #1d283a;
+    }
+    @media (min-width: 900px) {
+      .controls {
+        max-width: 600px;
+        margin: 10px auto 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -65,8 +92,16 @@
     </div>
     <canvas id="game" width="600" height="400"></canvas>
     <div class="status" id="status"></div>
+
+    <!-- Mobile-Steuerung -->
+    <div class="controls">
+      <button id="btn-left">⬅️ Links</button>
+      <button id="btn-fire">🔥 Schuss</button>
+      <button id="btn-right">Rechts ➡️</button>
+    </div>
+
     <p class="hint">
-      Steuerung: ← → bewegen, Leertaste schießen • Zum Starten ins Spiel tippen, dann eine Taste drücken.
+      Tastatur: ← → bewegen, Leertaste schießen • Mobile: Buttons nutzen • Zum Starten ins Spiel tippen, dann eine Taste drücken.
     </p>
   </div>
 
@@ -81,6 +116,7 @@
 
     const keys = { left: false, right: false, shoot: false };
 
+    // --- Tastatur-Input -------------------------------------------
     window.addEventListener("keydown", (e) => {
       if (e.code === "ArrowLeft") keys.left = true;
       if (e.code === "ArrowRight") keys.right = true;
@@ -99,6 +135,35 @@
       if (e.code === "Space") keys.shoot = false;
     });
 
+    // --- Touch / Button Input ------------------------------------
+    function bindButton(id, onDown, onUp) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const start = (ev) => {
+        ev.preventDefault();
+        onDown();
+      };
+      const end = (ev) => {
+        ev.preventDefault();
+        onUp();
+      };
+
+      ["mousedown", "touchstart", "pointerdown"].forEach((t) =>
+        el.addEventListener(t, start, { passive: false })
+      );
+      ["mouseup", "mouseleave", "touchend", "touchcancel", "pointerup", "pointercancel"].forEach((t) =>
+        el.addEventListener(t, end, { passive: false })
+      );
+    }
+
+    function setupTouchControls() {
+      bindButton("btn-left", () => (keys.left = true), () => (keys.left = false));
+      bindButton("btn-right", () => (keys.right = true), () => (keys.right = false));
+      bindButton("btn-fire", () => (keys.shoot = true), () => (keys.shoot = false));
+    }
+
+    // --- Utility --------------------------------------------------
     function aabb(a, b) {
       return !(
         a.x + a.w < b.x ||
@@ -108,6 +173,7 @@
       );
     }
 
+    // --- Game Objects ---------------------------------------------
     class Player {
       constructor() {
         this.w = 40;
@@ -397,6 +463,7 @@
     }
 
     const game = new Game();
+    setupTouchControls();
 
     canvas.addEventListener("click", () => {
       canvas.focus();
