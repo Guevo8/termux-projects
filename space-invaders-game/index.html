@@ -57,6 +57,7 @@
     .controls {
       margin-top: 10px;
       display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
       align-items: center;
@@ -97,14 +98,15 @@
       <button id="btn-left">⬅️ Links</button>
       <button id="btn-fire">🔥 Schuss</button>
       <button id="btn-right">Rechts ➡️</button>
+      <button id="btn-restart">🔄 Neustart</button>
     </div>
 
     <p class="hint">
-      Tastatur: ← → bewegen, Leertaste schießen • Mobile: Buttons nutzen • Zum Starten ins Spiel tippen, dann eine Taste drücken.
+      Tastatur: ← → bewegen, Leertaste schießen, R zum Neustart •
+      Mobile: Buttons nutzen (inkl. 🔄 Neustart) • Zum Starten ins Spiel tippen oder eine Taste drücken.
     </p>
   </div>
 
-  <!-- ab hier nur noch externer Game-Code -->
   <script src="game.js"></script>
 </body>
 </html>

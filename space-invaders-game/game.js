@@ -19,7 +19,10 @@ window.addEventListener("keydown", (e) => {
     keys.shoot = true;
   }
   if (e.code === "KeyR" || e.code === "Enter") {
-    if (game.gameOver) game.reset();
+    if (game.gameOver) {
+      game.reset();
+      game.start();
+    }
   }
 });
 
@@ -55,6 +58,18 @@ function setupTouchControls() {
   bindButton("btn-left", () => (keys.left = true), () => (keys.left = false));
   bindButton("btn-right", () => (keys.right = true), () => (keys.right = false));
   bindButton("btn-fire", () => (keys.shoot = true), () => (keys.shoot = false));
+
+  // Neustart-Button (Mobile & Desktop)
+  bindButton(
+    "btn-restart",
+    () => {
+      if (game) {
+        game.reset();
+        game.start();
+      }
+    },
+    () => {}
+  );
 }
 
 // === Utility =====================================================
@@ -263,18 +278,20 @@ class Game {
     this.gameOver = false;
     statusEl.textContent = "";
     this.updateHUD();
+    // optional: direkt initial zeichnen, damit Screen nicht leer ist
+    this.draw();
   }
 
   win(msg) {
     if (this.gameOver) return;
     this.gameOver = true;
-    statusEl.textContent = msg + " – Taste R zum Neustart.";
+    statusEl.textContent = msg + " – Neustart: Button 🔄 oder Taste R.";
   }
 
   lose(msg) {
     if (this.gameOver) return;
     this.gameOver = true;
-    statusEl.textContent = msg + " – Taste R zum Neustart.";
+    statusEl.textContent = msg + " – Neustart: Button 🔄 oder Taste R.";
   }
 
   updateHUD() {
@@ -352,7 +369,7 @@ class Game {
       ctx.font = "bold 24px system-ui";
       ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 10);
       ctx.font = "14px system-ui";
-      ctx.fillText("Drücke R zum Neustart", canvas.width / 2, canvas.height / 2 + 14);
+      ctx.fillText("Neustart: Button 🔄 oder Taste R", canvas.width / 2, canvas.height / 2 + 14);
     }
   }
 }
@@ -361,10 +378,14 @@ class Game {
 const game = new Game();
 setupTouchControls();
 
+// einmal initial zeichnen, damit direkt etwas sichtbar ist
+game.draw();
+
 canvas.addEventListener("click", () => {
   canvas.focus();
   game.start();
 });
+
 window.addEventListener("keydown", () => {
   game.start();
 });
