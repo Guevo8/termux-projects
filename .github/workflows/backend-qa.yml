@@ -1,0 +1,78 @@
+name: Backend QA
+
+on:
+  push:
+    # Nur triggern, wenn sich relevante Bereiche ändern
+    paths:
+      - 'world-os-console/backend/**'
+      - 'world-os-console/scripts/**'
+      - 'world-os-console/portal/AGENTS.md'
+      - '.github/workflows/backend-qa.yml'
+  schedule:
+    # Optional: täglicher Run um 05:00 UTC
+    - cron: '0 5 * * *'
+
+jobs:
+  qa-backend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: world-os-console
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          if [ -f requirements-dev.txt ]; then
+            pip install -r requirements-dev.txt
+          fi
+
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/*.sh || true
+
+      - name: Run backend tests
+        run: |
+          ./scripts/test_backend.sh
+
+      - name: Run backend security checks
+        continue-on-error: true
+        run: |
+          ./scripts/security_backend.sh
+
+      - name: Collect QA summary
+        if: always()
+        run: |
+          mkdir -p portal/qa-logs
+          echo "# Backend QA Run Summary" > portal/qa-logs/latest-run.txt
+          echo "" >> portal/qa-logs/latest-run.txt
+          echo "**Run ID**: ${{ github.run_id }}" >> portal/qa-logs/latest-run.txt
+          echo "**Commit**: ${{ github.sha }}" >> portal/qa-logs/latest-run.txt
+          echo "**Branch**: ${{ github.ref_name }}" >> portal/qa-logs/latest-run.txt
+          echo "**Timestamp**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> portal/qa-logs/latest-run.txt
+          echo "" >> portal/qa-logs/latest-run.txt
+          echo "## Next Steps" >> portal/qa-logs/latest-run.txt
+          echo "1. View full logs in GitHub Actions UI" >> portal/qa-logs/latest-run.txt
+          echo "2. Pass this file + AGENTS.md to your KI-Agent for analysis" >> portal/qa-logs/latest-run.txt
+          echo "" >> portal/qa-logs/latest-run.txt
+          echo "See portal/qa-report-template.md for full report structure." >> portal/qa-logs/latest-run.txt
+
+      - name: Upload QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-qa-summary
+          path: world-os-console/portal/qa-logs/latest-run.txt
