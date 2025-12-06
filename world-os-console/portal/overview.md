@@ -60,6 +60,65 @@ Eine schlanke Web-Anwendung zur Verwaltung strukturierter Welten-Daten nach dem 
 
 ---
 
+## 🤖 CI/CD Integration: GitHub Actions
+
+### Die Pipeline (Backend QA)
+
+**Datei**: `.github/workflows/backend-qa.yml`
+
+GitHub Actions führt automatisch folgende Checks durch:
+
+**Trigger-Bedingungen:**
+- Bei jedem `push` zum `world-os-console/backend/`
+- Bei Änderungen an `world-os-console/scripts/`
+- Bei Änderungen an `AGENTS.md` (Governance-Updates)
+- Optional: täglich um 05:00 UTC
+
+**Pipeline-Schritte:**
+
+1. **Checkout** – Repository abrufen
+2. **Python 3.11 Setup** – Umgebung vorbereiten
+3. **Dependencies** – `requirements.txt` & `requirements-dev.txt` installieren
+4. **Tests ausführen** – `./scripts/test_backend.sh`
+5. **Security-Checks** – `./scripts/security_backend.sh` (non-blocking)
+6. **QA-Summary** – Artefakt für KI-Analyse erstellen
+
+### Status & Logs
+
+Nach jedem Run findest du:
+- **GitHub Actions UI** – Status (grün/gelb/rot) + detaillierte Logs
+- **Artifact** – `backend-qa-summary/latest-run.txt` zum Download
+- **Repository** – Optional: `portal/qa-logs/latest-run.txt` (committed)
+
+### Wie KI-Agenten damit arbeiten
+
+**Workflow:**
+
+1. **CI läuft** → GitHub Actions führt Tests/Security aus
+2. **Logs verfügbar** → Status in GitHub UI oder als Artifact
+3. **Agent liest Logs** → z.B. Continue IDE, Claude, Perplexity
+4. **Agent erstellt Report** → QA-Summary + Error-Analysis + To-Do-Liste
+
+**Beispiel-Prompt für deine KI-Tools:**
+
+> "Lies `portal/AGENTS.md` + den letzten Backend QA-Run (Artifact: `latest-run.txt`).
+> Erstelle einen strukturierten QA-Report:
+> - Fehlertypen & Häufigkeit
+> - Security-Warnings (priorisiert)
+> - Empfohlene Nächste Schritte
+> - Code-Stellen zum Review (mit Links zur Datei)"
+
+### Infrastructure-as-Code Principle
+
+Diese Struktur ermöglicht:
+
+✅ **Verlässlichkeit**: Gleiche Tests laufen immer gleich  
+✅ **Transparenz**: Jeder Commit hat ein QA-Audit  
+✅ **Flexibilität**: KI-Werkzeug wechselbar (Continue → Claude → Copilot → Jules)  
+✅ **Skalierbarkeit**: Bei größerem Projekt: mehr Checks (Lint, Migrations, etc.)
+
+---
+
 ## 📁 Projektstruktur (Detailliert)
 
 ```
@@ -92,8 +151,9 @@ world-os-console/
 │
 └── portal/                      ← NEU: Dokumentation & Portal
     ├── AI-Dev-Orchestration-Portal.html
-    ├── overview.md
-    └── AGENTS.md
+    ├── overview.md              ← Diese Datei
+    ├── AGENTS.md
+    └── qa-report-template.md
 ```
 
 ---
@@ -149,11 +209,13 @@ Eine vereinfachte Demo-Welt mit:
 - Agenten können neue Tier-Inhalte vorschlagen
 - AGENTS.md definiert die KI-Governance
 - Continue IDE-Integration für Code-Review
+- GitHub Actions + QA-Reports für strukturierte Feedback-Schleifen
 
 ### Phase C: Studio-System
 - Multi-Agent-Orchestrierung
 - Narrative-Generation aus Tier-Daten
 - Godot-Integration für prototyping
+- Automatische Workflow-Optimierung basierend auf QA-Trends
 
 ---
 
@@ -165,7 +227,8 @@ Eine vereinfachte Demo-Welt mit:
 | **Backend** | FastAPI (Python 3) | REST API + Datenbank-Zugriff |
 | **Storage** | JSON (Datei) | Persistenz (MVP-einfach) |
 | **Schema** | JSON-Schema v1 | Validierung & Typ-Definition |
-| **Orchester** | AGENTS.md | KI-Governance (optional) |
+| **Orchester** | AGENTS.md | KI-Governance (Regeln & DoD) |
+| **CI/CD** | GitHub Actions | Automatisierte QA & Security |
 
 ---
 
@@ -174,6 +237,7 @@ Eine vereinfachte Demo-Welt mit:
 - **Main Repo**: [github.com/Guevo8/termux-projects](https://github.com/Guevo8/termux-projects)
 - **World-OS Console**: `termux-projects/world-os-console/`
 - **Portal/Docs**: `termux-projects/world-os-console/portal/`
+- **CI Workflow**: `.github/workflows/backend-qa.yml`
 
 ---
 
@@ -185,3 +249,4 @@ Lizenziert unter MIT License
 ---
 
 *Dieses Dokument wurde generiert am 2025-12-06 als strukturierte Übersicht des World-OS Console Projekts.*
+*Zuletzt aktualisiert: 2025-12-06 (CI/CD Integration hinzugefügt)*
