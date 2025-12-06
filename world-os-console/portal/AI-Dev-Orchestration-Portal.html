@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Dev-Orchestration Master Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #e2e8f0; /* Slate 200 */
+        }
+        h1, h2, h3, .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .grid-bg {
+            background-image: linear-gradient(to right, #1e293b 1px, transparent 1px),
+                              linear-gradient(to bottom, #1e293b 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .card {
+            background-color: #1e293b; /* Slate 800 */
+            border: 1px solid #334155; /* Slate 700 */
+            transition: all 0.3s ease;
+        }
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        /* Hide scrollbar for clean UI */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .tab-active {
+            border-bottom: 2px solid #3b82f6;
+            color: #fff;
+        }
+        .tab-inactive {
+            color: #94a3b8;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-inactive:hover {
+            color: #cbd5e1;
+            border-bottom: 2px solid #334155;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="grid-bg min-h-screen flex flex-col">
+
+    <!-- Sticky Header with Navigation -->
+    <header class="border-b border-slate-700 bg-slate-900/95 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 pt-4 pb-0 flex flex-col md:flex-row justify-between items-center gap-4">
+            <!-- Logo Area -->
+            <div class="flex items-center gap-3 pb-4 md:pb-0">
+                <i data-lucide="cpu" class="text-blue-500 w-8 h-8"></i>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">AI-Dev-Orchestration</h1>
+                    <p class="text-xs text-slate-400 mono">MASTER PORTAL // V1.0</p>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <nav class="flex gap-8 text-sm font-medium">
+                <button onclick="switchTab('blueprint')" id="btn-blueprint" class="tab-active pb-4 px-2 transition flex items-center gap-2">
+                    <i data-lucide="layers" class="w-4 h4"></i> Blueprint (Theorie)
+                </button>
+                <button onclick="switchTab('worldos')" id="btn-worldos" class="tab-inactive pb-4 px-2 transition flex items-center gap-2">
+                    <i data-lucide="globe-2" class="w-4 h4"></i> World-OS (Praxis)
+                </button>
+            </nav>
+            
+            <!-- Actions -->
+            <div class="hidden md:flex pb-4 md:pb-0">
+                 <button onclick="window.print()" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded border border-slate-600 text-sm transition">
+                    <i data-lucide="printer" class="w-4 h-4"></i> PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full">
+
+        <!-- VIEW 1: BLUEPRINT (Architecture) -->
+        <div id="view-blueprint" class="fade-in space-y-20">
+            <!-- Hero Blueprint -->
+            <section class="text-center space-y-6 max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-4">
+                    <span class="status-dot bg-blue-500 animate-pulse"></span> ARCHITECTURE VIEW
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">
+                    Die Architektur-Pyramide
+                </h2>
+                <p class="text-lg text-slate-400">
+                    Strikte Trennung von Strategie, Ausführung und Kontrolle.
+                </p>
+            </section>
+
+            <!-- Pyramid Cards -->
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 border-t-2 border-dashed border-slate-700 -z-10"></div>
+
+                <!-- Layer 1 -->
+                <div class="card p-6 rounded-xl relative bg-slate-800 z-10">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Layer 1: Brain</div>
+                    <div class="mt-4 text-center text-purple-400"><i data-lucide="brain-circuit" class="w-12 h-12 mx-auto mb-4"></i></div>
+                    <h3 class="text-xl font-bold text-center text-white">Strategie</h3>
+                    <p class="text-slate-400 text-sm text-center mt-2">Architektur & Prompts. Kein Code-Zugriff.</p>
+                </div>
+
+                <!-- Layer 3 (Control) -->
+                <div class="card p-6 rounded-xl relative bg-slate-800 z-10 border-blue-500/30">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Layer 3: Control</div>
+                    <div class="mt-4 text-center text-blue-400"><i data-lucide="activity" class="w-12 h-12 mx-auto mb-4"></i></div>
+                    <h3 class="text-xl font-bold text-center text-white">Orchestrierung</h3>
+                    <p class="text-slate-400 text-sm text-center mt-2">CI/CD, QA & Review. Die Schaltzentrale.</p>
+                </div>
+
+                <!-- Layer 2 -->
+                <div class="card p-6 rounded-xl relative bg-slate-800 z-10">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Layer 2: Agent</div>
+                    <div class="mt-4 text-center text-emerald-400"><i data-lucide="bot" class="w-12 h-12 mx-auto mb-4"></i></div>
+                    <h3 class="text-xl font-bold text-center text-white">Ausführung</h3>
+                    <p class="text-slate-400 text-sm text-center mt-2">Tickets abarbeiten & Tests schreiben.</p>
+                </div>
+            </div>
+
+            <!-- Governance / AGENTS.md -->
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl text-white font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="shield-check" class="text-emerald-500"></i> Governance
+                    </h3>
+                    <p class="text-slate-400 mb-6">
+                        Die <code class="bg-slate-800 text-blue-400 px-1 rounded">AGENTS.md</code> ist der Arbeitsvertrag für KI.
+                    </p>
+                    <ul class="space-y-3 text-slate-300 text-sm">
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Definiert Kontext & Business-Logik</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Setzt "Definition of Done" fest</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Erzwingt Nutzung von Skripten</li>
+                    </ul>
+                </div>
+                <div class="relative bg-[#0d1117] rounded-xl border border-slate-700 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-2 border-b border-slate-700 bg-slate-900">
+                        <span class="text-xs font-mono text-slate-400">AGENTS.md Preview</span>
+                        <button onclick="copyToClipboard()" class="text-xs text-slate-400 hover:text-white flex gap-1"><i data-lucide="copy" class="w-3 h-3"></i> Copy</button>
+                    </div>
+                    <pre id="agents-md-content" class="p-4 text-xs font-mono text-slate-300 overflow-auto"># AGENTS.md
+1. Context: World-OS Console
+2. No direct DB access from frontend
+3. Definition of Done:
+   - ./scripts/test_all.sh passes
+   - No linter errors</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: WORLD-OS (Showcase) -->
+        <div id="view-worldos" class="hidden fade-in space-y-20">
+            <!-- Hero World OS -->
+            <section class="text-center space-y-6 max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono mb-4">
+                    <span class="status-dot bg-emerald-500 animate-pulse"></span> HERO PROJECT: ACTIVE
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">
+                    World-OS Console
+                </h2>
+                <p class="text-lg text-slate-400">
+                    Das Referenz-Projekt zur Demonstration des Stacks. Eine modulare Story- & Systembasis.
+                </p>
+            </section>
+
+            <!-- Project Details -->
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <div class="card p-6 rounded-xl border-emerald-500/20">
+                        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="database" class="text-emerald-400"></i> Lore als Daten
+                        </h3>
+                        <p class="text-slate-400 text-sm">
+                            Im World-OS Console sind Geschichten keine reinen Texte, sondern JSON-Strukturen. Regionen, Fraktionen und NPCs sind verknüpfte Datenpunkte, die über eine API abrufbar sind.
+                        </p>
+                    </div>
+                    <div class="card p-6 rounded-xl border-emerald-500/20">
+                        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="git-commit" class="text-emerald-400"></i> End-to-End Demo
+                        </h3>
+                        <p class="text-slate-400 text-sm">
+                            Hier wird gezeigt, wie Agenten (Jules/Copilot) neue "Lore-Features" implementieren, Tests schreiben und vom Control-Layer (Continue) überprüft werden.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-6 rounded-xl bg-slate-800">
+                    <h4 class="text-sm font-mono text-slate-300 mb-4 border-b border-slate-700 pb-2">SYSTEM LAYERS</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 bg-slate-900 p-1.5 rounded border border-slate-700"><i data-lucide="book" class="w-4 h-4 text-emerald-400"></i></div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">T0: Canon & Lore</h5>
+                                <p class="text-xs text-slate-400">Markdown/JSON Source of Truth.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 bg-slate-900 p-1.5 rounded border border-slate-700"><i data-lucide="server" class="w-4 h-4 text-emerald-400"></i></div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">T1: World-OS API</h5>
+                                <p class="text-xs text-slate-400">FastAPI Service für Datenzugriff.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 bg-slate-900 p-1.5 rounded border border-slate-700"><i data-lucide="monitor" class="w-4 h-4 text-emerald-400"></i></div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">T2: Viewer & Tools</h5>
+                                <p class="text-xs text-slate-400">React Frontends & Godot Prototypen.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-slate-800 mt-auto bg-slate-900 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-sm">
+            <p class="mono mb-2">AI-DEV-ORCHESTRATION // WORLD-OS</p>
+            <p>Generated for Verification & Implementation.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        function switchTab(tabId) {
+            // Hide all views
+            document.getElementById('view-blueprint').classList.add('hidden');
+            document.getElementById('view-worldos').classList.add('hidden');
+            
+            // Reset Tabs
+            document.getElementById('btn-blueprint').className = 'tab-inactive pb-4 px-2 transition flex items-center gap-2';
+            document.getElementById('btn-worldos').className = 'tab-inactive pb-4 px-2 transition flex items-center gap-2';
+
+            // Show selected view
+            document.getElementById('view-' + tabId).classList.remove('hidden');
+            
+            // Highlight selected tab
+            document.getElementById('btn-' + tabId).className = 'tab-active pb-4 px-2 transition flex items-center gap-2';
+        }
+
+        function copyToClipboard() {
+            const content = document.getElementById('agents-md-content').innerText;
+            navigator.clipboard.writeText(content);
+            alert("AGENTS.md copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
