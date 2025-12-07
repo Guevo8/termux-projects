@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List
 
 from .models import Project, Tiers, Tier0Foundation, Tier1Core
@@ -40,9 +40,9 @@ def read_project(project_id: str):
 def create_project(project: Project):
     # Wenn created_at nicht gesetzt: jetzt
     if project.created_at is None:
-        project.created_at = datetime.utcnow()
+        project.created_at = datetime.now(timezone.utc)
     if project.updated_at is None:
-        project.updated_at = datetime.utcnow()
+        project.updated_at = datetime.now(timezone.utc)
     return upsert_project(project)
 
 

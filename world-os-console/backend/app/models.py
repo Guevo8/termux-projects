@@ -71,7 +71,7 @@ class Project(BaseModel):
     name: str
     type: Literal["novel", "game", "ttrpg", "screenplay", "other"] = "other"
     description: Optional[str] = None
-    created_at: datetime
-    updated_at: datetime
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
     tags: List[str] = []
     tiers: Tiers

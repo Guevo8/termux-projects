@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from typing import List
-from datetime import datetime
+from datetime import datetime, timezone
 
 from .models import Project
 
@@ -67,7 +67,7 @@ def upsert_project(project: Project) -> Project:
             existing_index = idx
             break
 
-    project.updated_at = datetime.utcnow()
+    project.updated_at = datetime.now(timezone.utc)
 
     if existing_index is None:
         projects.append(project)
